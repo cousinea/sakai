@@ -2,11 +2,26 @@ FROM tomcat:8-jre8
 
 MAINTAINER Rick Carter <rkcarter@umich.edu>
 
-# Need to get add-apt-repository command working, etc.
-# RUN apt-get install software-properties-common python-software-properties
-# Maven is too old, 3.0.5, so need a later one
-# RUN apt-get purge maven maven2 maven3 # That failed
-# RUN add-apt-repository ppa:andrei-pozolotin/maven3
+# I'm starting from a different base than he was, but trying this:
+# From: https://github.com/jorgemoralespou/s2i-java/blob/master/Dockerfile
+# Install build tools on top of base image
+# Java jdk 8, Maven 3.3, Gradle 2.6
+RUN INSTALL_PKGS="tar unzip bc which lsof java-1.8.0-openjdk java-1.8.0-openjdk-devel" && \
+    yum install -y --enablerepo=centosplus $INSTALL_PKGS && \
+    rpm -V $INSTALL_PKGS && \
+    yum clean all -y && \
+    mkdir -p /opt/openshift && \
+    mkdir -p /opt/app-root/source && chmod -R a+rwX /opt/app-root/source && \
+    mkdir -p /opt/s2i/destination && chmod -R a+rwX /opt/s2i/destination && \
+    mkdir -p /opt/app-root/src && chmod -R a+rwX /opt/app-root/src
+
+ENV MAVEN_VERSION 3.3.9
+RUN (curl -0 http://www.eu.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | \
+    tar -zx -C /usr/local) && \
+    mv /usr/local/apache-maven-$MAVEN_VERSION /usr/local/maven && \
+    ln -sf /usr/local/maven/bin/mvn /usr/local/bin/mvn && \
+    mkdir -p $HOME/.m2 && chmod -R a+rwX $HOME/.m2
+
 
 RUN apt-get update \
  && apt-get install -y maven openjdk-8-jdk git
