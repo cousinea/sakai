@@ -17,7 +17,7 @@ ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 
 ENV MAVEN_VERSION 3.3.9
 RUN (curl -0 http://www.eu.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | \
-    RUN tar -zx -C /usr/local) && \
+    tar -zx -C /usr/local) && \
     mv /usr/local/apache-maven-$MAVEN_VERSION /usr/local/maven && \
     ln -sf /usr/local/maven/bin/mvn /usr/local/bin/mvn && \
     mkdir -p $HOME/.m2 && chmod -R a+rwX $HOME/.m2
