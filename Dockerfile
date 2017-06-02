@@ -13,7 +13,7 @@ WORKDIR /tmp
 COPY . /tmp
 
 RUN mvn install
-RUN mvn clean install sakai:deploy -Dmaven.tomcat.home=usr/local/tomcat/webapps/ROOT.war
+RUN mvn clean install sakai:deploy -Dmaven.tomcat.home=/usr/local/tomcat/webapps/ROOT.war
 # Build CCM and place the resulting war in the tomcat dir.
 #RUN mvn clean install \
 #	&& mv ./target/ctools-project-migration-0.1.0.war /usr/local/tomcat/webapps/ROOT.war
@@ -25,7 +25,7 @@ WORKDIR /usr/local/tomcat/webapps
 
 RUN rm -rf ROOT
 
-EXPOSE 8080
+# EXPOSE 8080
 EXPOSE 8009
 
 RUN mkdir /usr/local/tomcat/home/
