@@ -7,7 +7,7 @@ RUN apt-get purge maven maven2 maven3
 RUN add-apt-repository ppa:andrei-pozolotin/maven3
 
 RUN apt-get update \
- && apt-get install -y maven=3.2 openjdk-8-jdk git
+ && apt-get install -y maven openjdk-8-jdk git
 
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 
@@ -22,7 +22,7 @@ RUN mvn clean install sakai:deploy -Dmaven.tomcat.home=/usr/local/tomcat/webapps
 #RUN mvn clean install \
 #	&& mv ./target/ctools-project-migration-0.1.0.war /usr/local/tomcat/webapps/ROOT.war
 # Remove unnecessary build dependencies.
-RUN apt-get remove -y maven=3.2 openjdk-8-jdk git \
+RUN apt-get remove -y maven openjdk-8-jdk git \
  && apt-get autoremove -y
 
 WORKDIR /usr/local/tomcat/webapps
