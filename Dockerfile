@@ -24,7 +24,7 @@ RUN (curl -0 http://www.eu.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries
 
 WORKDIR /tmp
 
-# Copy CCM code to local directory for building
+# Copy code to local directory for building
 COPY . /tmp
 
 RUN mvn install
