@@ -28,7 +28,7 @@ WORKDIR /tmp
 COPY . /tmp
 
 # RUN mvn install # only need one
-RUN mvn clean install sakai:deploy -Dmaven.tomcat.home=/usr/local/tomcat/webapps/ROOT.war
+RUN mvn clean install sakai:deploy -Dmaven.tomcat.home=/usr/local/tomcat
 # Build CCM and place the resulting war in the tomcat dir.
 #RUN mvn clean install \
 #	&& mv ./target/ctools-project-migration-0.1.0.war /usr/local/tomcat/webapps/ROOT.war
