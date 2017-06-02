@@ -2,6 +2,10 @@ FROM tomcat:7-jre8
 
 MAINTAINER Rick Carter <rkcarter@umich.edu>
 
+# Maven is too old, 3.0.5, so need a later one
+RUN apt-get purge maven maven2 maven3
+RUN add-apt-repository ppa:andrei-pozolotin/maven3
+
 RUN apt-get update \
  && apt-get install -y maven=3.2 openjdk-8-jdk git
 
